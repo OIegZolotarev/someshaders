@@ -264,7 +264,9 @@ void main()
 
 	// leilei - setup microjitter
 	vec2 jit;
-	float fc = mod(FrameCount, 4.0);
+	
+	// CrazyRussian: fix implicit cast	
+	float fc = mod(float(FrameCount), 4.0);
 	//fc = FrameDirection*6666;
 	jit.x = sin(fc*1.1) 	/ 2048;
 	jit.y = sin(fc);
@@ -295,7 +297,8 @@ void main()
 	// leilei hack! try to reduce scanline size to adapt moire off for resolutions.
 	float adjst = ((InputSize.y * SCANBIAS) / OutputSize.y ) + (inchdif * 0.42); 
 	float refrate;
-	if (localrefreshrate)
+	// CrazyRussian: fix implicit cast
+	if (localrefreshrate != 0)
 	{
 		// Determine from framecount and ticks as fast as we can
 		refrate = localrefreshrate;
@@ -420,7 +423,8 @@ void main()
 
     vec2 mod_fac = floor(vTexCoord * outsize.xy * SourceSize.xy / (InputSize.xy * vec2(MASK_SIZE, mask_dot_height * MASK_SIZE))) * 1.0001;
 
-    if (ROTATEMASK){
+// CrazyRussian: fix implicit cast
+    if (ROTATEMASK != 0){
 	float fac = mod_fac.x;
 	mod_fac.x = mod_fac.y;
 	mod_fac.y = fac;
